@@ -1,0 +1,45 @@
+<template name="Checklist">
+
+    <div class="checkList">
+
+        <h2>{{name}} <i class="fa fa-cog"></i></h2>
+        <h3>Incompleted: {{incompleteCount}}</h3>
+
+
+        <label class="hide-completed">
+            <input type="checkbox" checked="{{hideCompleted}}" />
+            Hide Completed Tasks
+        </label>
+
+        <ul>
+            <li class='new-li'>
+                <form class="new-task">
+                    <i class='fa fa-square-o'></i>
+                    <input type='text' name='text' placeholder='Type to add new task' />
+                </form>
+            </li>
+
+            {{#each tasks}}
+                {{> task}}
+            {{/each}}
+
+        </ul>
+    </div>
+</template>
+
+<template name="task">
+    <li class="{{#if checked}}checked{{/if}}">
+        <button class="delete"><i class="fa fa-ellipsis-v fa-2x"></i></button>
+
+        <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+        <a class="checkbox">
+            {{#if checked}}
+                <i class="fa fa-check-square-o"></i>
+            {{else}}
+                <i class="fa fa-square-o"></i>
+            {{/if}}
+        </a>
+
+        <span class="text">{{text}}</span>
+    </li>
+</template>

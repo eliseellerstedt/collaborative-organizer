@@ -1,0 +1,52 @@
+
+<template name="Lists">
+
+    <div class="content">
+        {{#if Template.subscriptionsReady}}
+            {{#each lists}}
+                <div class="bubble">
+                    <div class="box">
+                        <a href="/list/{{_id}}">
+                        <div class="row">
+                            <i class="fa fa-check-square-o fa-5x"></i>
+                        </div>
+
+                        <div class="row">
+                            <p class="list-title">{{name}}<button class="remove"><i class="fa fa-ellipsis-v fa-2x"></i></button></p>
+                        </div>
+                        </a>
+
+                    </div>
+                </div>
+            {{/each}}
+
+        {{else}}
+        <div class="bubble">
+            <div class="box">
+                    <div class="row">
+                        <i class="fa fa-check-square-o fa-5x"></i>
+                    </div>
+
+                    <div class="row">
+                        <p class="list-title">Loading...</p>
+                    </div>
+
+            </div>
+        </div>
+        {{/if}}
+    <div class="bubble">
+        <div class="box">
+            <div class="row">
+                <i class="fa fa-plus fa-5x"></i>
+            </div>
+
+            <div class="row">
+                <p class="list-title"><form class="new-list"><input type="text" name="text" placeholder="Type to add new list" /></form></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</template>

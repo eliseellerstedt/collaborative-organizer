@@ -1,0 +1,225 @@
+/* CSS declarations go here */
+body{
+    min-width: 100vh;
+    min-height: 100vh;
+    height: auto;
+    margin: 0px auto;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background: -webkit-linear-gradient(left top, #37789B , #50B4B9); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #37789B, #50B4B9); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #37789B, #50B4B9); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #37789B, #50B4B9); /* Standard syntax (must be last) */
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    font-family: "Helvetica", sans-serif;
+}
+
+@font-face {
+    font-family: handwritten;
+    src: url("../fonts/amatic/AmaticSC-Regular.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#header {
+    margin: 0 auto;
+    height: auto;
+    width: 100%;
+    padding: 0px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    position: relative;
+    color: #ffffff;
+}
+
+h1 {
+    text-align: left;
+    font-family: handwritten, sans-serif;
+    font-size: 70px;
+    margin-top: 0px;
+    margin-left: 5%;
+    margin-bottom: 0;
+    padding-top: 30px;
+    color: #ffffff;
+}
+
+h2 {
+    text-align: center;
+    color: #ffffff;
+}
+
+h3{
+    text-align: center;
+    padding-bottom: 30px;
+    color: #ffffff;
+}
+
+nav {
+    background-color: transparent;
+    color: #fff;
+    display: block;
+    margin-right: 5%;
+    overflow: hidden;
+    width: 80%;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    list-style-type: none;
+    float: right;
+
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+nav > ul > li > a {
+    color: #fff;
+    display: block;
+    line-height: 56px;
+    padding: 0 24px;
+    text-decoration: none;
+}
+
+input[type='text']::-webkit-input-placeholder{
+    color: white;
+    font-style: italic;
+}
+
+/*Start*/
+
+input.error{
+    background-color:rgb(255, 231, 231);
+}
+
+/*LISTS*/
+
+.content {
+    margin-top: 5%;
+    margin-right: auto;
+    margin-left: auto;
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.content .fa {
+    color: white;
+}
+
+.content a {
+    text-decoration: none;
+}
+
+.bubble {
+    margin: 30px;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border: 2px solid #ffffff;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.box {
+    padding: 1%;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+}
+
+.box a, a:visited, a:active {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.remove {
+    background: transparent;
+    border: none;
+}
+
+.list-title {
+    color: white;
+}
+
+.box input[type='text'] {
+    width: 85%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: 0;
+    color: white;
+    font-size: 15px;
+}
+
+/*CHECKLIST*/
+.checkList {
+    margin: 8% auto;
+    width: 70%;
+    align-self: center;
+    border: 2px solid #ffffff;
+    border-radius: 5px 20px 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+}
+
+.new-task input[type='text']{
+    margin-left: 3px;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: 0;
+    color: white;
+    font-size: 15px;
+}
+
+.checkList ul {
+    list-style-type: none;
+    padding: 30px;
+}
+
+.checkList ul li {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+}
+
+[type="checkbox"]{
+    display: none;
+}
+
+.delete {
+    float: right;
+    border: none;
+    background: transparent;
+    vertical-align: middle;
+}
+
+.delete .fa {
+    color: white;
+}

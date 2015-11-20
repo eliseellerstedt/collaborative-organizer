@@ -234,6 +234,24 @@ if (Meteor.isClient) {
       'click .checkbox': function(event){
         var icon = $(event.target);
         icon.parent().siblings('.toggle-checked').click();
+      },
+
+      'submit .collaborate': function (event){
+          event.preventDefault();
+
+          var email = event.target.email.value;
+          var currentList = this._id;
+
+          alert(email + ' ' + currentList);
+
+          Meteor.call('addCollaborator', email, currentList, function(error){
+              if(error){
+                  console.log(error.reason);
+                  alert('FEL');
+              }else{
+                  event.target.email.value = "";
+              }
+          });
       }
   });
 
@@ -280,7 +298,8 @@ if (Meteor.isServer) {
             var data = {
                 name: text,
                 createdAt: new Date(), // current time
-                createdBy: currentUser
+                createdBy: currentUser,
+                collaborators: []
             };
             if(!currentUser){
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
@@ -337,6 +356,17 @@ if (Meteor.isServer) {
             }
             Lists.remove(currentList);
             Tasks.remove({listId: currentList});
+        },
+        'addCollaborator': function(email, currentListId){
+            var currentUser = Meteor.userId();
+            if(!currentUser){
+                throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }
+            var currentList = Lists.findOne(currentListId);
+            var user = Meteor.users.findOne({"emails.address": email});
+            console.log(user._id);
+
+            Lists.upsert({_id:currentListId},{$push: {collaborators: {id:user._id}}});
         }
     });
 

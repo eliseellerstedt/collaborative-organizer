@@ -180,7 +180,7 @@ if (Meteor.isClient) {
     lists: function () {
         var currentUser = Meteor.userId();
         // Otherwise, return all of the tasks
-        return Lists.find({createdBy: currentUser}, {sort: {createdAt: 1}});
+        return Lists.find({$or: [{ createdBy: currentUser }, { collaborators: { $elemMatch: { _id: currentUser } } }]}, {sort: {createdAt: 1}});
     }
   });
 
@@ -279,7 +279,7 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
     Meteor.publish('Lists', function(){
         var currentUser = this.userId;
-        return Lists.find({ createdBy: currentUser });
+        return Lists.find({$or: [{ createdBy: currentUser }, { collaborators: { $elemMatch: { _id: currentUser } } }]} );
     });
 
     Meteor.publish('Tasks', function(currentList){
@@ -366,7 +366,7 @@ if (Meteor.isServer) {
             var user = Meteor.users.findOne({"emails.address": email});
             console.log(user._id);
 
-            Lists.upsert({_id:currentListId},{$push: {collaborators: {id:user._id}}});
+            Lists.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id}}});
         }
     });
 

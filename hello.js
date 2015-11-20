@@ -372,6 +372,9 @@ if (Meteor.isServer) {
             var currentList = Lists.findOne(currentListId);
             var user = Meteor.users.findOne({"emails.address": email});
             console.log(user._id);
+            if(currentUser === user._id){
+                throw new Meteor.Error("invalid-user", "The email you entered is the owner of this list.");
+            }
 
             Lists.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});
         }

@@ -97,6 +97,11 @@ input[type='text']::-webkit-input-placeholder{
     font-style: italic;
 }
 
+input[type='email']::-webkit-input-placeholder{
+    color: white;
+    font-style: italic;
+}
+
 /*Start*/
 
 input.error{
@@ -186,31 +191,66 @@ input.error{
     color: #ffffff;
 }
 
+.checkList h2 {
+    margin-bottom: 1%;
+}
+
 .dropdown {
-    width: 30%;
+    min-width: 270px;
     padding: 0;
-    margin-left: 30%;
+    margin-left: 35.25%;
     position: absolute;
     border: 2px solid #ffffff;
     border-radius: 10px;
+    background-color: #6AAAB8;
 }
 
-/*.dropdown:after {
+.dropdown:after {
     content: "";
     position: absolute;
-    top: -25px;
-    left: 300px;
+    top: -10px;
+    left: 10px;
     border-style: solid;
-    border-width: 0 15px 15px;
+    border-width: 0 10px 10px;
     border-color: #FFFFFF transparent;
     display: block;
     width: 0;
     z-index: 1;
-}*/
+}
 
-.dropdown ul {
+.dropdown [class^="fa-users"], [class*=" fa-users"] {
+    display: inline-block;
+    width: 100%;
+}
+
+.dropdown i {
+    margin-top: 0.5em;
+    text-align: center;
+}
+
+.dropdown .settings {
+    margin: 5%;
     padding: 0;
 }
+
+.dropdown input[type='email'] {
+    width: 85%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: 0;
+    color: white;
+    font-size: 15px;
+}
+
+
+
+.dropdown hr {
+    border: 1px solid white;
+    color: white;
+}
+
+
 
 .hidden {
     display: none;

@@ -3,13 +3,16 @@
     <div class="checkList">
 
         <h2>{{name}} <i class="fa fa-cog"></i></h2>
-        <div class="dropdown">
-            <ul>
+        <div class="dropdown hidden">
+            <i class="fa fa-users fa-2x"></i>
+            <ul class="settings">
                 {{#each collaborators}}
                      <li>{{this.email}}</li>
                 {{/each}}
-                <li><form class="collaborate"><input type="email" name="email"/></form></li>
+                <li><form class="collaborate"><input type="email" name="email" placeholder="Add collaborator"/></form></li>
+                <hr>
                 <li><label class="hide-completed">
+                    <i class='fa fa-square-o'></i>
                     <input type="checkbox" checked="{{hideCompleted}}" />
                     Hide Completed Tasks
                 </label></li>

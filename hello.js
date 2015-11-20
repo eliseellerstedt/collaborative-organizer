@@ -252,6 +252,9 @@ if (Meteor.isClient) {
                   event.target.email.value = "";
               }
           });
+      },
+      'click .fa-cog': function (){
+          $('.dropdown').toggleClass('hidden');
       }
   });
 

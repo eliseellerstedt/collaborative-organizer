@@ -14,7 +14,7 @@ Router.route('/list/:_id', {
   data: function(){
     var currentList = this.params._id;
       var currentUser = Meteor.userId();
-    return Lists.findOne({ _id: currentList, createdBy: currentUser });
+    return Lists.findOne({ _id: currentList });
   },
 
     onBeforeAction: function(){
@@ -191,10 +191,10 @@ if (Meteor.isClient) {
         var currentUser = Meteor.userId();
       if (Session.get("hideCompleted")) {
         // If hide completed is checked, filter tasks
-        return Tasks.find({ listId: currentList, createdBy: currentUser }, {checked: {$ne: true}}, {sort: {createdAt: -1}});
+        return Tasks.find({ listId: currentList}, {checked: {$ne: true}}, {sort: {createdAt: -1}});
       } else {
         // Otherwise, return all of the tasks
-        return Tasks.find({ listId: currentList, createdBy: currentUser }, {sort: {createdAt: -1}});
+        return Tasks.find({ listId: currentList}, {sort: {createdAt: -1}});
       }
     },
     hideCompleted: function () {
@@ -203,7 +203,7 @@ if (Meteor.isClient) {
       incompleteCount: function () {
           var currentList = this._id;
           var currentUser = Meteor.userId();
-        return Tasks.find({checked: {$ne: true}, createdBy: currentUser, listId: currentList}).count();
+        return Tasks.find({checked: {$ne: true}, listId: currentList}).count();
       }
 
   });
@@ -285,7 +285,7 @@ if (Meteor.isServer) {
     Meteor.publish('Tasks', function(currentList){
         var currentUser = this.userId;
         console.log(currentList);
-        return Tasks.find({ createdBy: currentUser, listId: currentList  })
+        return Tasks.find({ listId: currentList  })
     });
 
     Meteor.methods({
@@ -311,7 +311,9 @@ if (Meteor.isServer) {
             check(currentListId, String);
             var currentList = Lists.findOne(currentListId);
             var currentUser = Meteor.userId();
-            if(currentList.createdBy != currentUser){
+            var collaborator = search(currentUser, currentList.collaborators);
+            console.log(collaborator);
+            if((currentList.createdBy != currentUser) && !collaborator){
                 throw new Meteor.Error("invalid-user", "You don't own that list.");
             }
             if(!currentUser){
@@ -321,7 +323,6 @@ if (Meteor.isServer) {
                 text: text,
                 completed: false,
                 createdAt: new Date(), // current time
-                createdBy: currentUser,
                 listId: currentListId
             };
             console.log(data);
@@ -378,5 +379,13 @@ if (Meteor.isServer) {
             nextName = 'List ' + nextLetter;
         }
         return nextName;
+    }
+
+    function search(nameKey, myArray){
+        for (var i=0; i < myArray.length; i++) {
+            if (myArray[i]._id === nameKey) {
+                return myArray[i];
+            }
+        }
     }
 }

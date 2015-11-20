@@ -353,6 +353,8 @@ if (Meteor.isServer) {
             var currentUser = Meteor.userId();
             if(!currentUser){
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }else if((currentList.createdBy != currentUser)){
+                throw new Meteor.Error("invalid-user", "You're not the owner.");
             }
             Lists.remove(currentList);
             Tasks.remove({listId: currentList});

@@ -348,12 +348,14 @@ if (Meteor.isServer) {
             };
             Tasks.remove(data);
         },
-        'deleteList': function(currentList){
-            check(currentList, String);
+        'deleteList': function(currentListId){
+            check(currentListId, String);
             var currentUser = Meteor.userId();
+            var currentList = Lists.findOne(currentListId);
+
             if(!currentUser){
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
-            }else if((currentList.createdBy != currentUser)){
+            }else if((currentList.createdBy !== currentUser)){
                 throw new Meteor.Error("invalid-user", "You're not the owner.");
             }
             Lists.remove(currentList);
@@ -368,7 +370,7 @@ if (Meteor.isServer) {
             var user = Meteor.users.findOne({"emails.address": email});
             console.log(user._id);
 
-            Lists.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id}}});
+            Lists.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});
         }
     });
 

@@ -331,7 +331,7 @@ if (Meteor.isServer) {
         'changeItemStatus': function(documentId, status){
             check(status, Boolean);
             var currentUser = Meteor.userId();
-            var data = { _id: documentId, createdBy: currentUser };
+            var data = { _id: documentId};
             if(!currentUser){
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }
@@ -344,8 +344,7 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }
             var data = {
-                _id: documentId,
-                createdBy: currentUser
+                _id: documentId
             };
             Tasks.remove(data);
         },

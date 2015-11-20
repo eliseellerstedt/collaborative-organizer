@@ -369,12 +369,18 @@ if (Meteor.isServer) {
             if(!currentUser){
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }
-            var currentList = Lists.findOne(currentListId);
+
             var user = Meteor.users.findOne({"emails.address": email});
-            console.log(user._id);
             if(currentUser === user._id){
                 throw new Meteor.Error("invalid-user", "The email you entered is the owner of this list.");
             }
+
+            var userExists = Lists.find({_id:currentListId}, {collaborators: {_id:user._id, email: email}});
+            if(userExists){
+                throw new Meteor.Error("invalid-user", "This user already collaborates.");
+            }
+
+
 
             Lists.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});
         }

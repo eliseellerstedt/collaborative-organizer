@@ -1,0 +1,41 @@
+<template name="Items">
+
+    <div class="list-items">
+
+        <h2>{{name}} <i class="fa fa-cog"></i></h2>
+        <div class="dropdown hidden">
+            <i class="fa fa-users fa-2x"></i>
+            <ul class="settings">
+                {{#each collaborators}}
+                    <li>{{this.email}}</li>
+                {{/each}}
+                <li><form class="collaborate"><input type="email" name="email" placeholder="Add collaborator"/></form></li>
+                <hr>
+            </ul>
+        </div>
+
+        <h3>Total: {{totalCount}}</h3>
+
+        <div class="wanties">
+
+            <div class="wantie">
+                <form class="new-wantie">
+                    <input type='text' name='text' placeholder='Type to add new wantie' />
+                </form>
+            </div>
+
+            {{#each items}}
+                {{> item}}
+            {{/each}}
+
+        </div>
+    </div>
+</template>
+
+<template name="item">
+    <div class="wantie">
+        <button class="delete"><i class="fa fa-ellipsis-v fa-2x"></i></button>
+
+        <span class="text">{{text}}</span>
+    </div>
+</template>

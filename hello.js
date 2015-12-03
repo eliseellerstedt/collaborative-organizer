@@ -1,6 +1,7 @@
 Tasks = new Mongo.Collection("tasks");
 Lists = new Mongo.Collection("lists");
 Wanties = new Mongo.Collection("wanties");
+Items = new Mongo.Collection("items");
 
 Router.configure({
     layoutTemplate: 'main',
@@ -42,6 +43,31 @@ Router.route('/list/:_id', {
 
 Router.route('/wanties',{
     template: 'Wanties'
+});
+
+Router.route('/wanties/:_id', {
+    template: 'Items',
+    data: function(){
+        var currentWanties = this.params._id;
+        var currentUser = Meteor.userId();
+        return Wanties.findOne({ _id: currentWanties });
+    },
+
+    onBeforeAction: function(){
+        console.log("You triggered 'onBeforeAction' for 'listPage' route.");
+        var currentUser = Meteor.userId();
+        if(currentUser){
+            // logged-in
+            this.next();
+        } else {
+            // not logged-in
+            this.render("Start");
+        }
+    },
+    waitOn: function(){
+        var currentWanties = this.params._id;
+        return [ Meteor.subscribe('Wanties'), Meteor.subscribe('Items', currentWanties) ]
+    }
 });
 
 if (Meteor.isClient) {
@@ -318,13 +344,17 @@ if (Meteor.isServer) {
 
     Meteor.publish('Tasks', function(currentList){
         var currentUser = this.userId;
-        console.log(currentList);
         return Tasks.find({ listId: currentList  })
     });
 
     Meteor.publish('Wanties', function(){
         var currentUser = this.userId;
         return Wanties.find({$or: [{ createdBy: currentUser }, { collaborators: { $elemMatch: { _id: currentUser } } }]} );
+    });
+
+    Meteor.publish('Items', function(currentWanties){
+        var currentUser = this.userId;
+        return Items.find({ listId: currentWanties  })
     });
 
     Meteor.methods({

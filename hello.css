@@ -293,3 +293,46 @@ input.error{
 .delete .fa {
     color: white;
 }
+
+/*Wanties*/
+
+.wantie-category {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 30px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.wantie-category:before,
+.wantie-category:after{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    content: '';
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 1);
+}
+.wantie-category:before{
+    bottom: 0;
+    left: -75px;
+}
+.wantie-category:after{
+    top: -75px;
+    right: 0;
+}
+
+.wantie-category{
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

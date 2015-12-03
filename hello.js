@@ -278,6 +278,36 @@ if (Meteor.isClient) {
     }
   });
 
+    Template.Wanties.onCreated(function () {
+        this.subscribe('Wanties');
+    });
+
+    Template.Wanties.helpers({
+        wanties: function () {
+            var currentUser = Meteor.userId();
+            // Otherwise, return all of the tasks
+            return Wanties.find({$or: [{ createdBy: currentUser }, { collaborators: { $elemMatch: { _id: currentUser } } }]}, {sort: {createdAt: 1}});
+        }
+    });
+
+    Template.Wanties.events({
+        "submit .new-wanties": function (event) {
+            // Prevent default browser form submit
+            event.preventDefault();
+
+            // Get value from form element
+            var text = event.target.text.value;
+            Meteor.call('createNewWanties', text, function(error, results){
+                if(error){
+                    console.log(error.reason);
+                } else {
+                    // Clear form
+                    event.target.text.value = "";
+                }
+            });
+        }
+    });
+
 }
 
 if (Meteor.isServer) {
@@ -290,6 +320,11 @@ if (Meteor.isServer) {
         var currentUser = this.userId;
         console.log(currentList);
         return Tasks.find({ listId: currentList  })
+    });
+
+    Meteor.publish('Wanties', function(){
+        var currentUser = this.userId;
+        return Wanties.find({$or: [{ createdBy: currentUser }, { collaborators: { $elemMatch: { _id: currentUser } } }]} );
     });
 
     Meteor.methods({
@@ -384,6 +419,23 @@ if (Meteor.isServer) {
 
 
             Lists.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});
+        },
+        'createNewWanties': function(text){
+            var currentUser = Meteor.userId();
+            check(text, String);
+            if(text == ""){
+                text = defaultName(currentUser);
+            }
+            var data = {
+                name: text,
+                createdAt: new Date(), // current time
+                createdBy: currentUser,
+                collaborators: []
+            };
+            if(!currentUser){
+                throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }
+            return Wanties.insert(data);
         }
     });
 

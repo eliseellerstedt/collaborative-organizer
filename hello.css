@@ -102,6 +102,11 @@ input[type='email']::-webkit-input-placeholder{
     font-style: italic;
 }
 
+input[type='number']::-webkit-input-placeholder{
+    color: white;
+    font-style: italic;
+}
+
 /*Start*/
 
 input.error{
@@ -304,7 +309,7 @@ input.error{
     margin: 8% auto;
     width: 70%;
     align-self: center;
-    border: 2px solid #ffffff;
+
     border-radius: 5px 20px 5px;
     background-color: rgba(255, 255, 255, 0.3);
     color: #ffffff;
@@ -323,11 +328,17 @@ input.error{
     height: 200px;
     width: 200px;
     margin: 30px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: flex-start;
     background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid #ffffff;
     border-radius: 8px;
 }
 
-.new-wantie input[type='text']{
+.new-wantie input[type='text'], .new-wantie input[type='number']{
     margin-left: 3px;
     height: 100%;
     background: transparent;
@@ -335,4 +346,48 @@ input.error{
     outline: 0;
     color: white;
     font-size: 15px;
+}
+
+.wantie-img {
+    height: 80%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.wantie-info {
+    height: 10%;
+    width: 90%;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wantie-price {
+    width: 50%;
+    color: #37789B;
+}
+
+.wantie-link {
+    width: 50%;
+}
+
+.wantie-link a {
+    align-self: right;
+}
+
+.wantie-link i {
+    color: #37789B;
+    align-self: right;
+}
+
+.wantie-details {
+    width: 95%;
+    padding-left: 5px;
+    padding-right: 5px;
 }

@@ -20,7 +20,15 @@
 
             <div class="wantie">
                 <form class="new-wantie">
-                    <input type='text' name='text' placeholder='Type to add new wantie' />
+                    <div>
+                        <p>New Wantie</p>
+                        <i class="fa fa-picture-o fa-5x"></i>
+                        <input type='text' name='img' id="img" placeholder='Image' />
+                    </div>
+                    <input type='text' name='text' id="name" placeholder='Title' />
+                    <input type='number' name='price' id="price" placeholder='Price' />
+                    <input type='text' name='link' id="link" placeholder='Link' />
+                    <input type="submit" value="Add" />
                 </form>
             </div>
 
@@ -34,8 +42,16 @@
 
 <template name="item">
     <div class="wantie">
-        <button class="delete"><i class="fa fa-ellipsis-v fa-2x"></i></button>
+        <div class="wantie-img" style="background-image: url('{{img}}');">
+            <div class="wantie-info">
+                <div class="wantie-price"><span class="text">{{price}}:-</span></div>
+                <div class="wantie-link"><a target="_blank" href="{{link}}"><i class="fa fa-shopping-cart"></i></a></div>
+            </div>
+        </div>
+        <div class="wantie-details">
+            <span class="text">{{text}}</span>
+            <button class="delete"><i class="fa fa-ellipsis-v fa-2x"></i></button>
+        </div>
 
-        <span class="text">{{text}}</span>
     </div>
 </template>

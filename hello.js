@@ -334,6 +334,62 @@ if (Meteor.isClient) {
         }
     });
 
+    // This code only runs on the client
+    Template.Items.helpers({
+        items: function () {
+            var currentWanties = this._id;
+            var currentUser = Meteor.userId();
+            // Return all of the items
+            return Items.find({ wantiesId: currentWanties}, {sort: {createdAt: -1}});
+
+        }
+    });
+
+    Template.Items.events({
+        "submit .new-wantie": function (event) {
+            // Prevent default browser form submit
+            event.preventDefault();
+
+            // Get value from form element
+            var img = $('#img').val();
+            var text = $('#name').val();
+            var price = $('#price').val();
+            var link = $('#link').val();
+            var currentWanties = this._id;
+            console.log(img, text, price, link);
+            console.log(currentWanties);
+
+            Meteor.call('createWantieItem', img, text, price, link, currentWanties, function(error){
+                if(error){
+                    console.log(error.reason);
+                } else {
+                    /*Töm fält*/
+                }
+            });
+        },
+
+        'submit .collaborate': function (event){
+            event.preventDefault();
+
+            var email = event.target.email.value;
+            var currentWanties = this._id;
+
+            alert(email + ' ' + currentWanties);
+
+            Meteor.call('addCollaborator', email, currentWanties, function(error){
+                if(error){
+                    console.log(error.reason);
+                    alert('FEL');
+                }else{
+                    event.target.email.value = "";
+                }
+            });
+        },
+        'click .fa-cog': function (){
+            $('.dropdown').toggleClass('hidden');
+        }
+    });
+
 }
 
 if (Meteor.isServer) {
@@ -354,7 +410,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('Items', function(currentWanties){
         var currentUser = this.userId;
-        return Items.find({ listId: currentWanties  })
+        return Items.find({ wantiesId: currentWanties  })
     });
 
     Meteor.methods({
@@ -466,6 +522,33 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }
             return Wanties.insert(data);
+        },
+        'createWantieItem': function(img, text, price, link, currentWantiesId){
+            /*check(img, String);
+            check(text, String);
+            check(price, Number);
+            check(link, String);
+            check(currentWantiesId, String);*/
+            var currentWanties = Wanties.findOne(currentWantiesId);
+            var currentUser = Meteor.userId();
+            var collaborator = search(currentUser, currentWanties.collaborators);
+            console.log(collaborator);
+            if((currentWanties.createdBy != currentUser) && !collaborator){
+                throw new Meteor.Error("invalid-user", "You don't own that list.");
+            }
+            if(!currentUser){
+                throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }
+            var data = {
+                img: img,
+                text: text,
+                price: price,
+                link: link,
+                createdAt: new Date(), // current time
+                wantiesId: currentWantiesId
+            };
+            console.log(data);
+            return Items.insert(data);
         }
     });
 

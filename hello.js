@@ -1,21 +1,27 @@
 Tasks = new Mongo.Collection("tasks");
 Lists = new Mongo.Collection("lists");
+Wanties = new Mongo.Collection("wanties");
+
+Router.configure({
+    layoutTemplate: 'main',
+    loadingTemplate: 'loading'
+});
 
 Router.route('', function() {
     this.render('Start');
 });
 
-Router.route('/checklist', function(){
-  this.render('Checklist');
+Router.route('/todos',{
+    template: 'Lists'
 });
 
 Router.route('/list/:_id', {
-  template: 'Checklist',
-  data: function(){
-    var currentList = this.params._id;
-      var currentUser = Meteor.userId();
-    return Lists.findOne({ _id: currentList });
-  },
+    template: 'Checklist',
+    data: function(){
+        var currentList = this.params._id;
+        var currentUser = Meteor.userId();
+        return Lists.findOne({ _id: currentList });
+    },
 
     onBeforeAction: function(){
         console.log("You triggered 'onBeforeAction' for 'listPage' route.");
@@ -34,13 +40,8 @@ Router.route('/list/:_id', {
     }
 });
 
-Router.route('/lists',{
-    template: 'Lists'
-});
-
-Router.configure({
-    layoutTemplate: 'main',
-    loadingTemplate: 'loading'
+Router.route('/wanties',{
+    template: 'Wanties'
 });
 
 if (Meteor.isClient) {

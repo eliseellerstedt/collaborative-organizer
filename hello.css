@@ -3,10 +3,8 @@ body{
     min-width: 100vh;
     min-height: 100vh;
     height: auto;
-    margin: 0px auto;
-    padding: 0px;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    margin: 0 auto;
+    padding: 0;
     background: -webkit-linear-gradient(left top, #37789B , #50B4B9); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(bottom right, #37789B, #50B4B9); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(bottom right, #37789B, #50B4B9); /* For Firefox 3.6 to 15 */
@@ -248,8 +246,6 @@ input.error{
     font-size: 15px;
 }
 
-
-
 .dropdown hr {
     border: 1px solid white;
     color: white;
@@ -326,10 +322,10 @@ input.error{
 .wanties {
     width: 100%;
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
+    flex-flow: row wrap;
+    justify-content: center;
     align-items: stretch;
-    align-content: flex-start;
+    align-content: center;
 }
 
 .wantie {

@@ -364,6 +364,10 @@ if (Meteor.isClient) {
                     console.log(error.reason);
                 } else {
                     /*Töm fält*/
+                    $('#img').val("");
+                    $('#name').val("");
+                    $('#price').val("");
+                    $('#link').val("");
                 }
             });
         },

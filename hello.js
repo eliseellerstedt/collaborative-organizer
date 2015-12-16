@@ -8,15 +8,27 @@ Router.configure({
     loadingTemplate: 'loading'
 });
 
-Router.route('', function() {
+Router.configure({
+    layoutTemplate: 'startpage'
+});
+
+Router.route('/', function() {
+    this.layout('startpage');
+    this.render('Start');
+});
+
+Router.route('/home', function() {
+    this.layout('main');
     this.render('Start');
 });
 
 Router.route('/todos',{
+    layoutTemplate: 'main',
     template: 'Lists'
 });
 
 Router.route('/list/:_id', {
+    layoutTemplate: 'main',
     template: 'Checklist',
     data: function(){
         var currentList = this.params._id;
@@ -42,10 +54,12 @@ Router.route('/list/:_id', {
 });
 
 Router.route('/wanties',{
+    layoutTemplate: 'main',
     template: 'Wanties'
 });
 
 Router.route('/wanties/:_id', {
+    layoutTemplate: 'main',
     template: 'Items',
     data: function(){
         var currentWanties = this.params._id;

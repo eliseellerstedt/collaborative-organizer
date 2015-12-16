@@ -1,0 +1,71 @@
+/*ToDos*/
+
+.content {
+    margin-top: 5%;
+    margin-right: auto;
+    margin-left: auto;
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.content .fa {
+    color: white;
+}
+
+.content a {
+    text-decoration: none;
+}
+
+.bubble {
+    margin: 30px;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border: 2px solid #ffffff;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.box {
+    padding: 1%;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+}
+
+.box a, a:visited, a:active {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.remove {
+    background: transparent;
+    border: none;
+}
+
+.list-title {
+    color: white;
+}
+
+.box input[type='text'] {
+    width: 85%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: 0;
+    color: white;
+    font-size: 15px;
+}

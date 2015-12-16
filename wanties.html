@@ -1,23 +1,19 @@
 <template name="Wanties">
     <div class="content">
         {{#each wanties}}
-            <div class="bubble">
-                <div class="box">
+            <div class="cloud">
+                <div class="cloud-content">
                     <a href="/wanties/{{_id}}">
-                        <div class="row">
-                            <i class="fa fa-check-square-o fa-5x"></i>
-                        </div>
-
                         <div class="row">
                             <p class="list-title">{{name}}<button class="remove"><i class="fa fa-ellipsis-v fa-2x"></i></button></p>
                         </div>
                     </a>
-
                 </div>
             </div>
         {{/each}}
-        <div class="bubble">
-            <div class="box">
+
+        <div class="cloud">
+            <div class="cloud-content">
                 <div class="row">
                     <i class="fa fa-plus fa-5x"></i>
                 </div>
@@ -28,5 +24,6 @@
 
             </div>
         </div>
+
     </div>
 </template>

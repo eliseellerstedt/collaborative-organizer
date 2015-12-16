@@ -1,0 +1,141 @@
+/*Items Wanties*/
+
+.list-items {
+    margin: 8% auto;
+    width: 70%;
+    align-self: center;
+    border-radius: 5px 20px 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+}
+
+.list-items h2 {
+    padding-top: 30px;
+    margin: 0;
+}
+
+.list-items h3 {
+    padding: 0;
+}
+
+.wanties {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: center;
+}
+
+.wantie {
+    height: 200px;
+    width: 200px;
+    margin: 30px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: flex-start;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+}
+
+.create-wantie {
+    height: 200px;
+    width: 200px;
+    margin: 30px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px dotted #ffffff;
+    border-radius: 8px;
+    font-size: large;
+}
+
+.create-wantie p {
+    margin: 10px;
+}
+
+.new-wantie {
+    width: 90%;
+}
+
+.new-wantie i {
+    margin: 3px;
+}
+
+.wantie-input-field {
+    background-color: rgba(255, 255, 255, 0.3);
+    margin-bottom: 5px;
+}
+
+.new-wantie input[type='text'], .new-wantie input[type='number']{
+    margin-left: 5px;
+    margin-right: 0;
+    margin-bottom: 5px;
+    height: 100%;
+    width: 80%;
+    background: transparent;
+    border: none;
+    outline: 0;
+    color: white;
+    font-size: 15px;
+}
+
+.new-wantie input[type='submit'] {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    outline: 0;
+    color: white;
+    font-size: 15px;
+}
+
+.wantie-img {
+    height: 80%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.wantie-info {
+    height: 10%;
+    width: 90%;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wantie-price {
+    width: 50%;
+    color: #37789B;
+}
+
+.wantie-link {
+    width: 50%;
+}
+
+.wantie-link a {
+    align-self: right;
+}
+
+.wantie-link i {
+    color: #37789B;
+    align-self: right;
+}
+
+.wantie-details {
+    width: 95%;
+    padding-left: 5px;
+    padding-right: 5px;
+}

@@ -406,6 +406,15 @@ if (Meteor.isClient) {
         'click .fa-cog': function (){
             $('.dropdown').toggleClass('hidden');
         }
+
+    });
+
+    Template.item.events({
+        "click .delete": function (event) {
+            event.preventDefault();
+            var documentId = this._id;
+            Meteor.call('removeWantieItem', documentId);
+        }
     });
 
 }
@@ -567,6 +576,17 @@ if (Meteor.isServer) {
             };
             console.log(data);
             return Items.insert(data);
+        },
+        'removeWantieItem': function(documentId){
+            check(documentId, String);
+            var currentUser = Meteor.userId();
+            if(!currentUser){
+                throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }
+            var data = {
+                _id: documentId
+            };
+            Items.remove(data);
         }
     });
 

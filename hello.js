@@ -135,7 +135,7 @@ if (Meteor.isClient) {
                     } else {
                         var currentRoute = Router.current().route.getName();
                         if(currentRoute == "Start"){
-                            Router.go("/lists");
+                            Router.go("/todos");
                         }
                     }
                 });

@@ -345,6 +345,11 @@ if (Meteor.isClient) {
                     event.target.text.value = "";
                 }
             });
+        },
+        'click .remove': function(event){
+            event.preventDefault();
+            var currentWantiesList = this._id;
+            Meteor.call("deleteWantiesList", currentWantiesList);
         }
     });
 
@@ -510,8 +515,8 @@ if (Meteor.isServer) {
             }else if((currentList.createdBy !== currentUser)){
                 throw new Meteor.Error("invalid-user", "You're not the owner.");
             }
-            Lists.remove(currentList);
-            Tasks.remove({listId: currentList});
+            Lists.remove(currentListId);
+            Tasks.remove({listId: currentListId});
         },
         'addCollaborator': function(email, currentListId){
             var currentUser = Meteor.userId();
@@ -549,6 +554,19 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }
             return Wanties.insert(data);
+        },
+        'deleteWantiesList': function(currentWantiesId){
+            check(currentWantiesId, String);
+            var currentUser = Meteor.userId();
+            var currentWantiesList = Wanties.findOne(currentWantiesId);
+
+            if(!currentUser){
+                throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }else if((currentWantiesList.createdBy !== currentUser)){
+                throw new Meteor.Error("invalid-user", "You're not the owner.");
+            }
+            Wanties.remove(currentWantiesId);
+            Items.remove({wantiesId: currentWantiesId});
         },
         'createWantieItem': function(img, text, price, link, currentWantiesId){
             /*check(img, String);

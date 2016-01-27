@@ -17,9 +17,9 @@ Router.route('/', function() {
     this.render('Start');
 });
 
-Router.route('/home', function() {
-    this.layout('main');
-    this.render('Start');
+Router.route('/home',{
+    layoutTemplate: 'main',
+    template: 'Lists'
 });
 
 Router.route('/todos',{
@@ -133,10 +133,7 @@ if (Meteor.isClient) {
                             });
                         }
                     } else {
-                        var currentRoute = Router.current().route.getName();
-                        if(currentRoute == "Start"){
-                            Router.go("/todos");
-                        }
+                        Router.go("/home");
                     }
                 });
             }
@@ -157,7 +154,7 @@ if (Meteor.isClient) {
                             });
                         }
                     } else {
-                        Router.go("/lists"); // Redirect user if registration succeeds
+                        Router.go("/todos"); // Redirect user if registration succeeds
                     }
                  });
             }
@@ -183,7 +180,7 @@ if (Meteor.isClient) {
         'click .logout': function () {
             event.preventDefault();
             Meteor.logout();
-            Router.go('');
+            Router.go('/');
         }
     });
 

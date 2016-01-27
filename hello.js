@@ -285,7 +285,7 @@ if (Meteor.isClient) {
 
           alert(email + ' ' + currentList);
 
-          Meteor.call('addCollaborator', email, currentList, function(error){
+          Meteor.call('addCollaborator', 'tasks', email, currentList, function(error){
               if(error){
                   console.log(error.reason);
                   alert('FEL');
@@ -391,15 +391,19 @@ if (Meteor.isClient) {
             });
         },
 
+        'click .fa-cog': function (){
+            $('.dropdown').toggleClass('hidden');
+        },
+
         'submit .collaborate': function (event){
             event.preventDefault();
 
             var email = event.target.email.value;
-            var currentWanties = this._id;
+            var currentList = this._id;
 
-            alert(email + ' ' + currentWanties);
+            alert(email + ' ' + currentList);
 
-            Meteor.call('addCollaborator', email, currentWanties, function(error){
+            Meteor.call('addCollaborator', 'wanties', email, currentList, function(error){
                 if(error){
                     console.log(error.reason);
                     alert('FEL');
@@ -407,9 +411,6 @@ if (Meteor.isClient) {
                     event.target.email.value = "";
                 }
             });
-        },
-        'click .fa-cog': function (){
-            $('.dropdown').toggleClass('hidden');
         }
 
     });
@@ -518,7 +519,8 @@ if (Meteor.isServer) {
             Lists.remove(currentListId);
             Tasks.remove({listId: currentListId});
         },
-        'addCollaborator': function(email, currentListId){
+        'addCollaborator': function(view, email, currentListId){
+
             var currentUser = Meteor.userId();
             if(!currentUser){
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
@@ -529,14 +531,24 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("invalid-user", "The email you entered is the owner of this list.");
             }
 
-            var userExists = Lists.find({_id:currentListId}, {collaborators: {_id:user._id, email: email}});
+            var userExists;
+
+            if(view === 'tasks'){
+                userExists = Lists.find({$and: [{ _id: currentListId }, { collaborators: { $elemMatch: { _id: user._id } } }]});
+            }else{
+                userExists = Wanties.find({$and: [{ _id: currentListId }, { collaborators: { $elemMatch: { _id: user._id } } }]});
+            }
+
             if(userExists){
                 throw new Meteor.Error("invalid-user", "This user already collaborates.");
             }
 
+            if(view === 'task'){
+                Lists.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});
+            }else{
+                Wanties.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});
+            }
 
-
-            Lists.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});
         },
         'createNewWanties': function(text){
             var currentUser = Meteor.userId();

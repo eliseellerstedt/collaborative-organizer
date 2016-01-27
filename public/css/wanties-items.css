@@ -18,6 +18,19 @@
     padding: 0;
 }
 
+.list-items ul {
+    list-style-type: none;
+    padding: 30px;
+}
+
+.list-items ul li {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+}
+
 .wanties {
     width: 100%;
     display: flex;
@@ -139,3 +152,4 @@
     padding-left: 5px;
     padding-right: 5px;
 }
+

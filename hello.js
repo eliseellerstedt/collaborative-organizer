@@ -358,6 +358,15 @@ if (Meteor.isClient) {
             // Return all of the items
             return Items.find({ wantiesId: currentWanties}, {sort: {createdAt: -1}});
 
+        },
+        totalCount: function () {
+            var currentList = this._id;
+            var currentUser = Meteor.userId();
+            var count = 0;
+            Items.find({wantiesId: currentList}).forEach(function(item){
+                count += Number(item.price);
+            });
+            return count;
         }
     });
 

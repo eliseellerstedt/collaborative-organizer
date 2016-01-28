@@ -19,12 +19,34 @@ Router.route('/', function() {
 
 Router.route('/home',{
     layoutTemplate: 'main',
-    template: 'Lists'
+    template: 'Lists',
+    onBeforeAction: function(){
+        console.log("You triggered 'onBeforeAction' for 'listPage' route.");
+        var currentUser = Meteor.userId();
+        if(currentUser){
+            // logged-in
+            this.next();
+        } else {
+            // not logged-in
+            Router.go("/");
+        }
+    }
 });
 
 Router.route('/todos',{
     layoutTemplate: 'main',
-    template: 'Lists'
+    template: 'Lists',
+    onBeforeAction: function(){
+        console.log("You triggered 'onBeforeAction' for 'listPage' route.");
+        var currentUser = Meteor.userId();
+        if(currentUser){
+            // logged-in
+            this.next();
+        } else {
+            // not logged-in
+            Router.go("/");
+        }
+    }
 });
 
 Router.route('/list/:_id', {
@@ -44,7 +66,7 @@ Router.route('/list/:_id', {
             this.next();
         } else {
             // not logged-in
-            this.render("Start");
+            Router.go("/");
         }
     },
     waitOn: function(){
@@ -55,7 +77,18 @@ Router.route('/list/:_id', {
 
 Router.route('/wanties',{
     layoutTemplate: 'main',
-    template: 'Wanties'
+    template: 'Wanties',
+    onBeforeAction: function(){
+        console.log("You triggered 'onBeforeAction' for 'listPage' route.");
+        var currentUser = Meteor.userId();
+        if(currentUser){
+            // logged-in
+            this.next();
+        } else {
+            // not logged-in
+            Router.go("/");
+        }
+    }
 });
 
 Router.route('/wanties/:_id', {
@@ -75,7 +108,7 @@ Router.route('/wanties/:_id', {
             this.next();
         } else {
             // not logged-in
-            this.render("Start");
+            Router.go("/");
         }
     },
     waitOn: function(){
@@ -533,6 +566,7 @@ if (Meteor.isServer) {
             }
 
             var user = Meteor.users.findOne({"emails.address": email});
+            console.log(user);
             if(currentUser === user._id){
                 throw new Meteor.Error("invalid-user", "The email you entered is the owner of this list.");
             }
@@ -540,16 +574,17 @@ if (Meteor.isServer) {
             var userExists;
 
             if(view === 'tasks'){
-                userExists = Lists.find({$and: [{ _id: currentListId }, { collaborators: { $elemMatch: { _id: user._id } } }]});
+                userExists = Lists.find({$and: [{ _id: currentListId }, { collaborators: { $elemMatch: { _id: user._id } } }]}).fetch();
             }else{
                 userExists = Wanties.find({$and: [{ _id: currentListId }, { collaborators: { $elemMatch: { _id: user._id } } }]});
             }
+            console.log(userExists);
 
-            if(userExists){
+            if(userExists.length > 0){
                 throw new Meteor.Error("invalid-user", "This user already collaborates.");
             }
 
-            if(view === 'task'){
+            if(view === 'tasks'){
                 Lists.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});
             }else{
                 Wanties.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});

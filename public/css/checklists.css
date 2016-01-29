@@ -51,7 +51,7 @@
     color: #ffffff;
 }
 
-.remove {
+button {
     background: transparent;
     border: none;
 }
@@ -63,9 +63,33 @@
 .box input[type='text'] {
     width: 85%;
     height: 100%;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.3);
     border: none;
     outline: 0;
     color: white;
     font-size: 15px;
+}
+
+.dropdown-actions {
+    min-width: 70px;
+    padding: 0;
+    margin-top: 0;
+    margin-left: 8%;
+    position: absolute;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    background-color: #6AAAB8;
+}
+
+.dropdown-actions:after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    border-style: solid;
+    border-width: 0 10px 10px;
+    border-color: #FFFFFF transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
 }

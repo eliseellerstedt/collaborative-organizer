@@ -290,7 +290,14 @@ if (Meteor.isClient) {
         var currentUser = Meteor.userId();
         // Otherwise, return all of the tasks
         return Lists.find({$or: [{ createdBy: currentUser }, { collaborators: { $elemMatch: { _id: currentUser } } }]}, {sort: {createdAt: 1}});
-    }
+    },
+      userId: function(){
+          return Meteor.userId();
+      },
+      equals: function(a, b){
+          return a === b
+      }
+
   });
 
   // This code only runs on the client

@@ -240,11 +240,49 @@ if (Meteor.isClient) {
 
     },
 
+      'click .actions': function(event){
+          event.preventDefault();
+          //$('.dropdown-actions').addClass('hidden');
+          $('#' + this._id).toggleClass('hidden');
+      },
+
+      'click .edit': function(event){
+          event.preventDefault();
+          $('#name-' + this._id).html('<form class="update"><input class="editable-name" type="text" value="' + this.name + '" name="text" /></form>');
+          $('#' + this._id).addClass('hidden');
+          $('.editable-name').focus();
+      },
+
+      'click .editable-name': function(event){
+        event.preventDefault();
+      },
+
+      'submit .update': function(event, template){
+          event.preventDefault();
+          var text = event.target.text.value;
+          var currentList = this._id;
+          console.log(text);
+
+          Meteor.call('updateList', currentList, text, function(error, results){
+              if(error){
+                  console.log(error.reason);
+              } else {
+                  // Clear form
+                  $('#name-' + currentList).html('');
+                  $(this).text(text);
+                  $('<button class="actions"><i class="fa fa-ellipsis-v fa-2x"></i></button>').appendTo($('#name-' + currentList));
+                  //event.target.text.value = "";
+
+              }
+          });
+      },
+
     'click .remove': function(event){
       event.preventDefault();
       var currentList = this._id;
       Meteor.call("deleteList", currentList);
     }
+
   });
 
   Template.Lists.helpers({
@@ -275,6 +313,12 @@ if (Meteor.isClient) {
           var currentList = this._id;
           var currentUser = Meteor.userId();
         return Tasks.find({checked: {$ne: true}, listId: currentList}).count();
+      },
+      equals: function(a, b){
+        return a === b
+      },
+      userId: function(){
+          return Meteor.userId();
       }
 
   });
@@ -400,6 +444,12 @@ if (Meteor.isClient) {
                 count += Number(item.price);
             });
             return count;
+        },
+        equals: function(a, b){
+            return a === b
+        },
+        userId: function(){
+            return Meteor.userId();
         }
     });
 
@@ -545,6 +595,21 @@ if (Meteor.isServer) {
             };
             Tasks.remove(data);
         },
+        'updateList': function(currentListId, text){
+            check(currentListId, String);
+            check(text, String);
+
+            var currentUser = Meteor.userId();
+            var currentList = Lists.findOne(currentListId);
+
+            if(!currentUser){
+                throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }else if((currentList.createdBy !== currentUser)){
+                throw new Meteor.Error("invalid-user", "You're not the owner.");
+            }
+
+            Lists.update({_id:currentListId},{$set: {name: text}});
+        },
         'deleteList': function(currentListId){
             check(currentListId, String);
             var currentUser = Meteor.userId();
@@ -565,22 +630,26 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }
 
+            var userCollection;
             var user = Meteor.users.findOne({"emails.address": email});
-            console.log(user);
-            if(currentUser === user._id){
+
+            if(view === 'tasks'){
+                userCollection = Lists.find({$and: [{ _id: currentListId }, { createdBy: user._id }]}).fetch();
+            }else{
+                userCollection = Wanties.find({$and: [{ _id: currentListId }, { createdBy: user._id }]}).fetch();
+            }
+
+            if(userCollection.length > 0){
                 throw new Meteor.Error("invalid-user", "The email you entered is the owner of this list.");
             }
 
-            var userExists;
-
             if(view === 'tasks'){
-                userExists = Lists.find({$and: [{ _id: currentListId }, { collaborators: { $elemMatch: { _id: user._id } } }]}).fetch();
+                userCollection = Lists.find({$and: [{ _id: currentListId }, { collaborators: { $elemMatch: { _id: user._id } } }]}).fetch();
             }else{
-                userExists = Wanties.find({$and: [{ _id: currentListId }, { collaborators: { $elemMatch: { _id: user._id } } }]});
+                userCollection = Wanties.find({$and: [{ _id: currentListId }, { collaborators: { $elemMatch: { _id: user._id } } }]}).fetch();
             }
-            console.log(userExists);
 
-            if(userExists.length > 0){
+            if(userCollection.length > 0){
                 throw new Meteor.Error("invalid-user", "This user already collaborates.");
             }
 

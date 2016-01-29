@@ -9,7 +9,9 @@
                 {{#each collaborators}}
                     <li>{{this.email}}</li>
                 {{/each}}
-                <li><form class="collaborate"><input type="email" name="email" placeholder="Add collaborator"/></form></li>
+                {{#if equals createdBy userId}}
+                    <li><form class="collaborate"><input type="email" name="email" placeholder="Add collaborator"/></form></li>
+                {{/if}}
             </ul>
         </div>
 

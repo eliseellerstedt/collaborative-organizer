@@ -10,6 +10,15 @@
                     </a>
                 </div>
             </div>
+
+            <div class="popUp" id="popUp-{{_id}}">
+                <span>Sure you want to delete "{{name}}"?</span>
+                <div>
+                    <button class="cancel">Cancel</button>
+                    <button class="yes">Yes</button>
+                </div>
+            </div>
+
         {{/each}}
 
         <div class="cloud">
@@ -25,5 +34,9 @@
             </div>
         </div>
 
+
+
     </div>
+
+
 </template>

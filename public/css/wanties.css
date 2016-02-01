@@ -22,3 +22,29 @@
     text-align: center;
     color: #ffffff;
 }
+
+.popUp {
+    display: none;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    width: auto;
+    height: 80px;
+    padding: 10px;
+    position: fixed;
+    background: rgba(64, 140, 165, 1);
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    top: 40%;
+    left: auto;
+    right: auto;
+}
+
+.popUp button {
+    width: 70px;
+    height: 30px;
+    color: white;
+    background: rgba(255, 255, 255, 0.3);
+    font-size: 15px;
+}

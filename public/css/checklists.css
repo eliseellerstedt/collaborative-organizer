@@ -79,7 +79,7 @@ button {
     margin-top: 10px;
     border: 2px solid #ffffff;
     border-radius: 10px;
-    background-color: #6AAAB8;
+    background: rgba(64, 140, 165, 0.8);
 }
 
 .popover:after {

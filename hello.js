@@ -476,8 +476,23 @@ if (Meteor.isClient) {
         },
         'click .remove': function(event){
             event.preventDefault();
+            $('#popUp-' + this._id).css('display', 'flex');
+        },
+        'click .cancel': function(event){
+            event.preventDefault();
+            $('#popUp-' + this._id).css('display', 'none');
+        },
+        'click .yes': function(event){
+            event.preventDefault();
             var currentWantiesList = this._id;
-            Meteor.call("deleteWantiesList", currentWantiesList);
+            Meteor.call("deleteWantiesList", currentWantiesList, function(error, results){
+                if(error){
+                    console.log(error.reason);
+                } else {
+                    // Clear form
+                    $('.popUp').css('display', 'none');
+                }
+            });
         }
     });
 

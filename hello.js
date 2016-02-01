@@ -242,9 +242,16 @@ if (Meteor.isClient) {
 
       'click .actions': function(event){
           event.preventDefault();
-          $("[data-toggle=popover]").popover();
-          //$('.dropdown-actions').addClass('hidden');
-          //$('#' + this._id).toggleClass('hidden');
+          var button = $(event.target).closest('.actions');
+          button.popover({
+              html: true,
+              trigger: 'manual',
+              placement: 'bottom',
+              content: function () {
+                  var $buttons = $('#popover-template').html();
+                  return $buttons;
+              }
+          }).popover('toggle');
       },
 
       'click .edit': function(event){
@@ -392,17 +399,30 @@ if (Meteor.isClient) {
             Meteor.call('changeItemStatus', documentId, true);
         }
     },
+      'click .fa-ellipsis-v': function(event){
+          event.preventDefault();
+      },
+
       'click .actions': function(event){
           event.preventDefault();
-          //$('.dropdown-actions').addClass('hidden');
-          $('#' + this._id).toggleClass('hidden');
+          var button = $(event.target).closest('.actions');
+          button.popover({
+              html: true,
+              trigger: 'manual',
+              placement: 'bottom',
+              content: function () {
+                  var $buttons = $('#popover-template').html();
+                  return $buttons;
+              }
+          }).popover('toggle');
       },
 
       'click .edit': function(event){
           event.preventDefault();
-          $('span').html('<form class="update"><input class="editable-name" type="text" value="' + this.text + '" name="text" /></form>');
-          $('#' + this._id).addClass('hidden');
+          $('#' + this._id).html('<form class="update"><input class="editable-name" type="text" value="' + this.text + '" name="text" /></form>');
           $('.editable-name').focus();
+          console.log($(event.target));
+          $('.actions').popover('hide');
       },
 
       "click .remove": function (event) {
@@ -420,7 +440,7 @@ if (Meteor.isClient) {
               if(error){
                   console.log(error.reason);
               } else {
-                  $('span').html('');
+                  $('#' + currentListItemId).html('');
               }
           });
       }

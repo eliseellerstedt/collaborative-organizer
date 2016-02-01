@@ -70,26 +70,25 @@ button {
     font-size: 15px;
 }
 
-.dropdown-actions {
-    min-width: 70px;
-    padding: 0;
-    margin-top: 0;
-    margin-left: 8%;
+#popover-template {
+    display: none;
+}
+
+.popover{
     position: absolute;
+    margin-top: 10px;
     border: 2px solid #ffffff;
     border-radius: 10px;
     background-color: #6AAAB8;
 }
 
-.dropdown-actions:after {
+.popover:after {
     content: "";
     position: absolute;
     top: -10px;
-    left: 10px;
+    left: 14px;
     border-style: solid;
     border-width: 0 10px 10px;
     border-color: #FFFFFF transparent;
     display: block;
-    width: 0;
-    z-index: 1;
 }

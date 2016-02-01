@@ -14,13 +14,13 @@
                         <div class="row">
                             {{#if equals createdBy userId}}
                                 <p id="name-{{_id}}" class="list-title">{{name}}
-                                    <button class="actions" data-toggle="popover" data-placement="bottom"
-                                            data-html="true"
-                                            data-content="<div class='dropdown-actions hidden' id='{{_id}}'>
+                                    <button class="actions"><i class="fa fa-ellipsis-v fa-2x"></i></button>
+                                </p>
+
+                                <div id="popover-template">
                                     <button class='edit'><i class='fa fa-pencil'></i></button>
                                     <button class='remove'><i class='fa fa-trash'></i></button>
-                            </div>"><i class="fa fa-ellipsis-v fa-2x"></i></button>
-                                </p>
+                                </div>
 
                             {{else}}
                                 <p id="name-{{_id}}" class="list-title">{{name}}</p>

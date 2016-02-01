@@ -14,7 +14,7 @@
 }
 
 .dropdown {
-    min-width: 270px;
+    min-width: 300px;
     padding: 0;
     margin-left: 35.25%;
     position: absolute;
@@ -59,6 +59,17 @@
     outline: 0;
     color: white;
     font-size: 15px;
+}
+
+.delete-collaborator {
+    visibility: hidden;
+    position: absolute;
+    right: 20px;
+    padding: 0;
+}
+
+.delete-collaborator .fa {
+    margin: auto 0 auto 0;
 }
 
 .dropdown hr {

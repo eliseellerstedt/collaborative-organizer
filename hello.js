@@ -377,7 +377,6 @@ if (Meteor.isClient) {
           Meteor.call('addCollaborator', 'tasks', email, currentList, function(error){
               if(error){
                   console.log(error.reason);
-                  alert('FEL');
               }else{
                   event.target.email.value = "";
               }
@@ -385,6 +384,25 @@ if (Meteor.isClient) {
       },
       'click .fa-cog': function (){
           $('.dropdown').toggleClass('hidden');
+      },
+      'mouseenter .collaborator': function(event){
+          var target = $(event.target);
+          $('.delete-collaborator', target).css('visibility', 'visible');
+      },
+      'mouseleave .collaborator': function(event){
+          var target = $(event.target);
+          $('.delete-collaborator', target).css('visibility', 'hidden');
+      },
+      'click .delete-collaborator':function(event){
+          event.preventDefault();
+          var id = this._id;
+          var currentList = $('h2').data('id');
+
+          Meteor.call('removeCollaborator', 'tasks', currentList, id, function(error){
+              if(error){
+                  console.log(error.reason);
+              }
+          });
       }
   });
 
@@ -810,6 +828,22 @@ if (Meteor.isServer) {
                 Wanties.upsert({_id:currentListId},{$push: {collaborators: {_id:user._id, email: email}}});
             }
 
+        },
+        'removeCollaborator': function(view, currentListId, id){
+            var currentUser = Meteor.userId();
+            var currentList = Lists.findOne(currentListId);
+
+            if(!currentUser){
+                throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }else if((currentList.createdBy !== currentUser)){
+                throw new Meteor.Error("invalid-user", "You're not the owner.");
+            }
+
+            if(view === 'tasks'){
+                Lists.update({_id:currentListId},{ $pull: {collaborators: { _id: id }}});
+            }else{
+                Wanties.update({_id:currentListId},{ $pull: {collaborators: { _id: id }}});
+            }
         },
         'createNewWanties': function(text){
             var currentUser = Meteor.userId();

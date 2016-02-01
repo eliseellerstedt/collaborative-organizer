@@ -33,7 +33,7 @@ Router.route('/home',{
     }
 });
 
-Router.route('/todos',{
+Router.route('/checklists',{
     layoutTemplate: 'main',
     template: 'Lists',
     onBeforeAction: function(){
@@ -49,7 +49,7 @@ Router.route('/todos',{
     }
 });
 
-Router.route('/list/:_id', {
+Router.route('/checklist/:_id', {
     layoutTemplate: 'main',
     template: 'Checklist',
     data: function(){

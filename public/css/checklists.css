@@ -90,7 +90,7 @@ button {
     display: block;
 }
 
-input {
+.bubble input {
     padding: 5px;
     border-radius: 8px;
 }

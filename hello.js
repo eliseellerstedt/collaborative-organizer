@@ -474,6 +474,45 @@ if (Meteor.isClient) {
                 }
             });
         },
+        'click .actions': function(event){
+            event.preventDefault();
+            var button = $(event.target).closest('.actions');
+            button.popover({
+                html: true,
+                trigger: 'manual',
+                placement: 'bottom',
+                content: function () {
+                    var $buttons = $('#popover-template').html();
+                    return $buttons;
+                }
+            }).popover('toggle');
+        },
+        'click .edit': function(event){
+            event.preventDefault();
+            $('#name-' + this._id).html('<form class="update"><input class="editable-name" type="text" value="' + this.name + '" name="text" /></form>');
+            $('.editable-name').focus();
+        },
+        'click .editable-name': function(event){
+            event.preventDefault();
+        },
+        'submit .update': function(event, template){
+            event.preventDefault();
+            var text = event.target.text.value;
+            var currentList = this._id;
+            console.log(text);
+
+            Meteor.call('updateWantiesList', currentList, text, function(error, results){
+                if(error){
+                    console.log(error.reason);
+                } else {
+                    // Clear form
+                    $('#name-' + currentList).html('');
+                    $(this).text(text);
+                    $('<button class="actions"><i class="fa fa-ellipsis-v fa-2x"></i></button>').appendTo($('#name-' + currentList));
+                    //event.target.text.value = "";
+                }
+            });
+        },
         'click .remove': function(event){
             event.preventDefault();
             $('#popUp-' + this._id).css('display', 'flex');
@@ -757,6 +796,21 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }
             return Wanties.insert(data);
+        },
+        'updateWantiesList': function(currentListId, text){
+            check(currentListId, String);
+            check(text, String);
+
+            var currentUser = Meteor.userId();
+            var currentList = Wanties.findOne(currentListId);
+
+            if(!currentUser){
+                throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }else if((currentList.createdBy !== currentUser)){
+                throw new Meteor.Error("invalid-user", "You're not the owner.");
+            }
+
+            Wanties.update({_id:currentListId},{$set: {name: text}});
         },
         'deleteWantiesList': function(currentWantiesId){
             check(currentWantiesId, String);

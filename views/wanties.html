@@ -5,10 +5,15 @@
                 <div class="cloud-content">
                     <a href="/wanties/{{_id}}">
                         <div class="row">
-                            <p class="list-title">{{name}}<button class="remove"><i class="fa fa-ellipsis-v fa-2x"></i></button></p>
+                            <p id="name-{{_id}}" class="list-title">{{name}}<button class="actions"><i class="fa fa-ellipsis-v fa-2x"></i></button></p>
                         </div>
                     </a>
                 </div>
+            </div>
+
+            <div id="popover-template">
+                <button class='edit'><i class='fa fa-pencil'></i></button>
+                <button class='remove'><i class='fa fa-trash'></i></button>
             </div>
 
             <div class="popUp" id="popUp-{{_id}}">

@@ -448,6 +448,7 @@ if (Meteor.isClient) {
 
     Template.Wanties.onCreated(function () {
         this.subscribe('Wanties');
+        this.subscribe('Previews');
     });
 
     Template.Wanties.helpers({
@@ -455,6 +456,13 @@ if (Meteor.isClient) {
             var currentUser = Meteor.userId();
             // Otherwise, return all of the tasks
             return Wanties.find({$or: [{ createdBy: currentUser }, { collaborators: { $elemMatch: { _id: currentUser } } }]}, {sort: {createdAt: 1}});
+        },
+        previews: function() {
+            var currentWanties = this._id;
+            // Return all of the items
+            console.log(this._id);
+            console.log(Items.find({ wantiesId: currentWanties}, {sort: {createdAt: -1}}).fetch());
+            return Items.find({ wantiesId: currentWanties}, {sort :{ createdAt: -1}, limit : 6});
         }
     });
 
@@ -650,8 +658,7 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('Tasks', function(currentList){
-        var currentUser = this.userId;
-        return Tasks.find({ listId: currentList  })
+        return Tasks.find({ listId: currentList  });
     });
 
     Meteor.publish('Wanties', function(){
@@ -660,8 +667,11 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('Items', function(currentWanties){
-        var currentUser = this.userId;
-        return Items.find({ wantiesId: currentWanties  })
+        return Items.find({ wantiesId: currentWanties  });
+    });
+
+    Meteor.publish('Previews', function(currentWanties){
+        return Items.find();
     });
 
     Meteor.methods({

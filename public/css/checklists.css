@@ -21,15 +21,12 @@
 
 .bubble {
     margin: 30px;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    border-top-left-radius: 100px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 100px;
-    border-bottom-left-radius: 100px;
+    border-radius: 30px;
     border: 2px solid #ffffff;
     background-color: rgba(255, 255, 255, 0.3);
 }
@@ -91,4 +88,9 @@ button {
     border-width: 0 10px 10px;
     border-color: #FFFFFF transparent;
     display: block;
+}
+
+input {
+    padding: 5px;
+    border-radius: 8px;
 }

@@ -48,7 +48,20 @@
         </div>
         <div class="wantie-details">
             <span class="text">{{text}}</span>
-            <button class="delete"><i class="fa fa-ellipsis-v fa-2x"></i></button>
+            <button class="actions"><i class="fa fa-ellipsis-v fa-2x"></i></button>
+        </div>
+
+        <div id="popover-template">
+            <button class='edit'><i class='fa fa-pencil'></i></button>
+            <button class='remove'><i class='fa fa-trash'></i></button>
+        </div>
+
+        <div class="popUp" id="popUp-{{_id}}">
+            <span>Sure you want to delete "{{text}}"?</span>
+            <div>
+                <button class="cancel">Cancel</button>
+                <button class="yes">Yes</button>
+            </div>
         </div>
 
     </div>

@@ -613,7 +613,28 @@ if (Meteor.isClient) {
     });
 
     Template.item.events({
-        "click .delete": function (event) {
+        'click .actions': function(event){
+            event.preventDefault();
+            var button = $(event.target).closest('.actions');
+            button.popover({
+                html: true,
+                trigger: 'manual',
+                placement: 'bottom',
+                content: function () {
+                    var $buttons = $('#popover-template').html();
+                    return $buttons;
+                }
+            }).popover('toggle');
+        },
+        'click .remove': function(event){
+            event.preventDefault();
+            $('#popUp-' + this._id).css('display', 'flex');
+        },
+        'click .cancel': function(event){
+            event.preventDefault();
+            $('#popUp-' + this._id).css('display', 'none');
+        },
+        'click .yes': function(event){
             event.preventDefault();
             var documentId = this._id;
             Meteor.call('removeWantieItem', documentId);

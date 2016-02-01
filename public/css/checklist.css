@@ -97,13 +97,13 @@
     display: none;
 }
 
-.delete {
+.actions {
     float: right;
     border: none;
     background: transparent;
     vertical-align: middle;
 }
 
-.delete .fa {
+.fa {
     color: white;
 }

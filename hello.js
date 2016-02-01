@@ -242,8 +242,9 @@ if (Meteor.isClient) {
 
       'click .actions': function(event){
           event.preventDefault();
+          $("[data-toggle=popover]").popover();
           //$('.dropdown-actions').addClass('hidden');
-          $('#' + this._id).toggleClass('hidden');
+          //$('#' + this._id).toggleClass('hidden');
       },
 
       'click .edit': function(event){
@@ -391,12 +392,38 @@ if (Meteor.isClient) {
             Meteor.call('changeItemStatus', documentId, true);
         }
     },
+      'click .actions': function(event){
+          event.preventDefault();
+          //$('.dropdown-actions').addClass('hidden');
+          $('#' + this._id).toggleClass('hidden');
+      },
 
-    "click .delete": function (event) {
-        event.preventDefault();
-        var documentId = this._id;
-        Meteor.call('removeListItem', documentId);
-    }
+      'click .edit': function(event){
+          event.preventDefault();
+          $('span').html('<form class="update"><input class="editable-name" type="text" value="' + this.text + '" name="text" /></form>');
+          $('#' + this._id).addClass('hidden');
+          $('.editable-name').focus();
+      },
+
+      "click .remove": function (event) {
+          event.preventDefault();
+          var documentId = this._id;
+          Meteor.call('removeListItem', documentId);
+      },
+
+      'submit .update': function(event, template){
+          event.preventDefault();
+          var text = event.target.text.value;
+          var currentListItemId = this._id;
+
+          Meteor.call('updateListItem', currentListItemId, text, function(error, results){
+              if(error){
+                  console.log(error.reason);
+              } else {
+                  $('span').html('');
+              }
+          });
+      }
   });
 
     Template.Wanties.onCreated(function () {
@@ -601,6 +628,18 @@ if (Meteor.isServer) {
                 _id: documentId
             };
             Tasks.remove(data);
+        },
+        'updateListItem': function(currentListItemId, text){
+            check(currentListItemId, String);
+            check(text, String);
+
+            var currentUser = Meteor.userId();
+
+            if(!currentUser){
+                throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }
+
+            Tasks.update({_id:currentListItemId},{$set: {text: text}});
         },
         'updateList': function(currentListId, text){
             check(currentListId, String);

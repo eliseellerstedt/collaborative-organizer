@@ -41,7 +41,12 @@
 
 <template name="task">
     <li class="{{#if checked}}checked{{/if}}">
-        <button class="delete"><i class="fa fa-ellipsis-v fa-2x"></i></button>
+        <button class="actions"><i class="fa fa-ellipsis-v fa-2x"></i></button>
+
+        <div class="dropdown-actions hidden" id="{{_id}}">
+            <button class="edit"><i class="fa fa-pencil"></i></button>
+            <button class="remove"><i class="fa fa-trash"></i></button>
+        </div>
 
         <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
         <a class="checkbox">

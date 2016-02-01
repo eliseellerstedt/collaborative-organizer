@@ -2,12 +2,12 @@
 
     <div class="list-items">
 
-        <h2>{{name}} <i class="fa fa-cog"></i></h2>
+        <h2 data-id="{{_id}}">{{name}} <i class="fa fa-cog"></i></h2>
         <div class="dropdown hidden">
             <i class="fa fa-users fa-2x"></i>
             <ul class="settings">
                 {{#each collaborators}}
-                    <li>{{this.email}}</li>
+                    <li class="collaborator">{{this.email}}<button class="delete-collaborator"><i class="fa fa-times fa-2x"></i></button></li>
                 {{/each}}
                 {{#if equals createdBy userId}}
                     <li><form class="collaborate"><input type="email" name="email" placeholder="Add collaborator"/></form></li>

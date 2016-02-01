@@ -634,6 +634,25 @@ if (Meteor.isClient) {
                     event.target.email.value = "";
                 }
             });
+        },
+        'mouseenter .collaborator': function(event){
+            var target = $(event.target);
+            $('.delete-collaborator', target).css('visibility', 'visible');
+        },
+        'mouseleave .collaborator': function(event){
+            var target = $(event.target);
+            $('.delete-collaborator', target).css('visibility', 'hidden');
+        },
+        'click .delete-collaborator':function(event){
+            event.preventDefault();
+            var id = this._id;
+            var currentList = $('h2').data('id');
+
+            Meteor.call('removeCollaborator', 'wanties', currentList, id, function(error){
+                if(error){
+                    console.log(error.reason);
+                }
+            });
         }
 
     });
@@ -831,11 +850,19 @@ if (Meteor.isServer) {
         },
         'removeCollaborator': function(view, currentListId, id){
             var currentUser = Meteor.userId();
-            var currentList = Lists.findOne(currentListId);
-
+            
             if(!currentUser){
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
-            }else if((currentList.createdBy !== currentUser)){
+            }
+
+            var currentList;
+            if(view === 'tasks'){
+                currentList = Lists.findOne(currentListId);
+            }else{
+                currentList = Wanties.findOne(currentListId);
+            }
+
+            if((currentList.createdBy !== currentUser)){
                 throw new Meteor.Error("invalid-user", "You're not the owner.");
             }
 

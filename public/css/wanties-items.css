@@ -115,9 +115,10 @@
 .wantie-img {
     height: 80%;
     width: 100%;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom;
+    background-color: white;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;

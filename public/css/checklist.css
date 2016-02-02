@@ -117,4 +117,10 @@
 
 .fa {
     color: white;
+    cursor: pointer;
+}
+
+.fa-users {
+    color: #97C4CD;
+    cursor: default;
 }

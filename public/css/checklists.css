@@ -51,6 +51,7 @@
 button {
     background: transparent;
     border: none;
+    cursor: pointer;
 }
 
 .list-title {
@@ -93,4 +94,17 @@ button {
 .bubble input {
     padding: 5px;
     border-radius: 8px;
+}
+
+.bubble .fa-check {
+    color: #A5CFD7;
+}
+
+.new-checklist {
+    cursor: default;
+}
+
+.new-checklist .fa {
+    color: #A5CFD7;
+    cursor: default;
 }

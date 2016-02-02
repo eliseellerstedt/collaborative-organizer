@@ -79,6 +79,8 @@
 
 .new-wantie i {
     margin: 3px;
+    color: #97C4CD;
+    cursor: default;
 }
 
 .wantie-input-field {
@@ -107,6 +109,7 @@
     outline: 0;
     color: white;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .wantie-img {

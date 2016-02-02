@@ -108,5 +108,6 @@ input[type='number']::-webkit-input-placeholder{
 /*Start*/
 
 input.error{
+    display: block;
     background-color:rgb(255, 231, 231);
 }

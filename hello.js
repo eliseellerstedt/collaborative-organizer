@@ -17,6 +17,16 @@ Router.route('/', function() {
     this.render('Start');
 });
 
+Router.route('/login', function() {
+    this.layout('startpage');
+    this.render('Login');
+});
+
+Router.route('/signup', function() {
+    this.layout('startpage');
+    this.render('Signup');
+});
+
 Router.route('/home',{
     layoutTemplate: 'main',
     template: 'Lists',
@@ -147,6 +157,23 @@ if (Meteor.isClient) {
     });
 
     Template.Start.onRendered(function(){
+
+    });
+
+    Template.Start.onDestroyed(function(){
+        console.log("The 'login' template was just destroyed.");
+    });
+
+    Template.Start.events({
+        'click .btn-login': function(){
+            Router.go("/login");
+        },
+        'click .btn-signup': function(){
+            Router.go("/signup");
+        }
+    });
+
+    Template.Login.onRendered(function(){
         console.log("The 'login' template was just rendered.");
 
         var loginValidator = $('.login').validate({
@@ -172,6 +199,21 @@ if (Meteor.isClient) {
             }
         });
 
+    });
+
+    Template.Login.events({
+        'click input': function(){
+            $('input[name="email"]').attr('autocomplete', 'off');
+        },
+        'submit .login': function(){
+            event.preventDefault();
+        }
+
+    });
+
+    Template.Signup.onRendered(function(){
+        console.log("The 'signup' template was just rendered.");
+
         var regValidator = $('.register').validate({
             submitHandler: function(event){
                 var email = $('#reg-email').val();
@@ -179,7 +221,7 @@ if (Meteor.isClient) {
                 Accounts.createUser({
                     email: email,
                     password: password
-                 }, function(error){
+                }, function(error){
                     if(error){
                         if(error.reason == "Email already exists."){
                             regValidator.showErrors({
@@ -187,23 +229,19 @@ if (Meteor.isClient) {
                             });
                         }
                     } else {
-                        Router.go("/todos"); // Redirect user if registration succeeds
+                        Router.go("/home"); // Redirect user if registration succeeds
                     }
-                 });
+                });
             }
         });
+
     });
 
-    Template.Start.onDestroyed(function(){
-        console.log("The 'login' template was just destroyed.");
-    });
-
-    Template.Start.events({
-        'submit .register': function(){
-            event.preventDefault();
+    Template.Signup.events({
+        'click input': function(){
+            $('input[name="email"]').attr('autocomplete', 'off');
         },
-
-        'submit .login': function(){
+        'submit .register': function(){
             event.preventDefault();
         }
 
@@ -850,7 +888,7 @@ if (Meteor.isServer) {
         },
         'removeCollaborator': function(view, currentListId, id){
             var currentUser = Meteor.userId();
-            
+
             if(!currentUser){
                 throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }

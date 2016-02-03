@@ -5,8 +5,8 @@
             <ul>
                 {{#if currentUser}}
                     <li><a href="#" class="logout">Logout</a></li>
-                    <li><a href="{{pathFor route='wanties'}}">Wanties</a></li>
-                    <li><a href="{{pathFor route='checklists'}}">Checklists</a></li>
+                    <li class="{{ activeIfTemplateIs 'wanties' }}"><a href="{{pathFor route='wanties'}}">Wanties</a></li>
+                    <li class="{{ activeIfTemplateIs 'checklists' }}"><a href="{{pathFor route='checklists'}}">Checklists</a></li>
                 {{/if}}
                 <li><a href="/home">Home</a></li>
             </ul>

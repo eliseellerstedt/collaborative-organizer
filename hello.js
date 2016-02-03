@@ -247,6 +247,21 @@ if (Meteor.isClient) {
 
     });
 
+    Template.Header.helpers({
+       activeIfTemplateIs: function(template){
+           if(template === 'checklists'){
+               template = 'Lists';
+           }else if(template === 'wanties'){
+               template = 'Wanties';
+           }
+
+           var currentRoute = Router.current();
+           console.log(currentRoute.lookupTemplate());
+           return currentRoute &&
+           template === currentRoute.lookupTemplate() ? 'active' : '';
+       }
+    });
+
     Template.Header.events({
         'click .logout': function () {
             event.preventDefault();

@@ -90,6 +90,10 @@ nav > ul > li > a {
     text-decoration: none;
 }
 
+.active {
+    border-bottom: solid 1px white;
+}
+
 input[type='text']::-webkit-input-placeholder{
     color: white;
     font-style: italic;
